@@ -2,7 +2,7 @@
  * @Author: zhangchenhui@chtwm.com zhangchenhui@chtwm.com
  * @Date: 2024-06-05 21:04:45
  * @LastEditors: zhangchenhui@chtwm.com zhangchenhui@chtwm.com
- * @LastEditTime: 2024-07-09 17:41:33
+ * @LastEditTime: 2024-07-09 18:44:41
  * @FilePath: /MyLeetCodeStudy/哈撒给排序/6.堆排序.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -19,6 +19,7 @@ class MinHeap {
         return (i - 1) >> 1
     }
     shiftUp(i) {
+        if(i == 0) { return }
         const parentIndex = this.getParantIndex(i)
         if (this.heap[parentIndex] > this.heap[i]) {
             this.swap(parentIndex, i)
