@@ -2,7 +2,7 @@
  * @Author: zhangchenhui@chtwm.com zhangchenhui@chtwm.com
  * @Date: 2024-06-05 21:07:46
  * @LastEditors: zhangchenhui@chtwm.com zhangchenhui@chtwm.com
- * @LastEditTime: 2024-07-13 17:49:32
+ * @LastEditTime: 2024-08-01 16:51:21
  * @FilePath: /MyLeetCodeStudy/哈撒给排序/5.快速排序.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -44,3 +44,22 @@ const quickSort1 = (arr) => {
 
 const res1 = quickSort1([1,2,3,7,6,4,23,2,9,22,34])
 console.log(res1)
+
+
+const quickSort2 = (arr) => {
+    if(arr.length <= 1) {return arr}
+    const mid = arr[0]
+    const leftArr = []
+    const rightArr = []
+    const length = arr.length
+    for (let i = 1; i < length; i++) {
+        if (arr[i] > mid) {
+            rightArr.push(arr[i])
+        } else {
+            leftArr.push(arr[i])
+        }
+    }
+    return [...quickSort2(leftArr), mid, ...quickSort2(rightArr)]
+}
+const res2 = quickSort2([1,5,2,6,3,7,6,4,23,2,9,22,34])
+console.log(res2)
