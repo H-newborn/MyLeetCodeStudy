@@ -1,3 +1,11 @@
+/*
+ * @Author: zhangchenhui@chtwm.com zhangchenhui@chtwm.com
+ * @Date: 2024-07-04 09:16:08
+ * @LastEditors: zhangchenhui@chtwm.com zhangchenhui@chtwm.com
+ * @LastEditTime: 2024-08-12 13:49:08
+ * @FilePath: /MyLeetCodeStudy/哈撒给/20.小顶堆.js
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 // js 用数组表示堆，堆是完全二叉树
 // 左侧子节点的位置是 2 * index + 1
 // 右侧子节点的位置是 2 * index + 2

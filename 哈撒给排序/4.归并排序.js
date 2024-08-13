@@ -2,7 +2,7 @@
  * @Author: zhangchenhui@chtwm.com zhangchenhui@chtwm.com
  * @Date: 2024-06-05 21:07:32
  * @LastEditors: zhangchenhui@chtwm.com zhangchenhui@chtwm.com
- * @LastEditTime: 2024-08-01 17:12:52
+ * @LastEditTime: 2024-08-12 19:11:24
  * @FilePath: /MyLeetCodeStudy/哈撒给排序/4.归并排序.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -82,3 +82,25 @@ const mergeSort1 = (arr) => {
 const arr1 = [2, 3, 56, 78, 23, 45, 11, 0, 2]
 console.log(mergeSort1(arr1))
 console.log(111)
+
+const mergeSort2 = (arr) => {
+    const rec = (arr) => {
+        if (arr.length <= 1) { return arr }
+        const mid = Math.floor(arr.length / 2)
+        const leftArr = arr.slice(0, mid)
+        const rightArr = arr.slice(mid)
+        const resLeftArr = rec(leftArr)
+        const resRightArr = rec(rightArr)
+        const res = []
+        while (resLeftArr.length || resRightArr.length) {
+            if (resLeftArr.length && resRightArr.length) {
+                res.push(resLeftArr[0] < resRightArr[0] ? resLeftArr.shift() : resRightArr.shift())
+            } else if (resLeftArr.length) {
+                res.push(resLeftArr.shift())
+            } else if (resRightArr.length) {
+                res.push(resRightArr.shift())
+            }
+        }
+        return res
+    }
+}
