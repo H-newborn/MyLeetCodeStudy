@@ -2,9 +2,9 @@
  * @Author: zhangchenhui@chtwm.com zhangchenhui@chtwm.com
  * @Date: 2024-06-05 20:30:23
  * @LastEditors: zhangchenhui@chtwm.com zhangchenhui@chtwm.com
- * @LastEditTime: 2024-07-01 20:55:30
+ * @LastEditTime: 2024-09-04 21:33:31
  * @FilePath: /MyLeetCodeStudy/哈撒给/5.防抖.js
- * @Description: 触发高频事件后n秒内只会执行一次，如果n秒内再次出发，则重新计算时间，例如input输入框
+ * @Description: 触发高频事件后n秒内只会执行一次，如果n秒内再次触发，则重新计算时间，例如input输入框
  */
 
 function debounce(fn, wait) {
