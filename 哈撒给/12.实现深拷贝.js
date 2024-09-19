@@ -1,8 +1,8 @@
 /*
  * @Author: zhangchenhui@chtwm.com zhangchenhui@chtwm.com
  * @Date: 2024-06-05 20:33:18
- * @LastEditors: zhangchenhui@chtwm.com zhangchenhui@chtwm.com
- * @LastEditTime: 2024-09-04 19:53:35
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2024-09-15 17:28:05
  * @FilePath: /MyLeetCodeStudy/哈撒给/12.实现深拷贝.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -59,9 +59,35 @@ function deepClone(obj, hash = new WeakMap()) {
         return obj
     }
 
-    if (hash.has(obj)) {
-        return hash.get(obj)
-    }
+    // if (hash.has(obj)) {
+    //     return hash.get(obj)
+    // }
+
+    let newData = Array.isArray(obj) ? [] : {}
+    const dataKeys = Object.keys(obj)
+    dataKeys.forEach(key => {
+        const currentDataValue = obj[key]
+        if (typeof currentDataValue !== 'object' || currentDataValue == null) {
+            newData[key] = currentDataValue
+        } else if (Array.isArray(currentDataValue)) {
+            newData[key] = deepClone(currentDataValue)
+        } else if (currentDataValue instanceof Set) {
+            // newData[key] = new Set([...currentDataValue])
+            const set = new Set()
+            currentDataValue.forEach(value => {
+                set.add(deepClone(value));
+            });
+            newData[key] = set
+        } else if (currentDataValue instanceof Map) {
+            const map = new Map()
+            currentDataValue.forEach((item, key) => {
+                map.set(key, deepClone(item))
+            })
+            newData[key] = map
+        } else {
+            newData[key] = deepClone(currentDataValue)
+        }
+    })
 
     let res = Array.isArray(obj) ? [] : {}
     for (const key in obj) {

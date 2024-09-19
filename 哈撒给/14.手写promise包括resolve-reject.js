@@ -1,8 +1,8 @@
 /*
  * @Author: zhangchenhui@chtwm.com zhangchenhui@chtwm.com
  * @Date: 2024-06-05 20:34:27
- * @LastEditors: zhangchenhui@chtwm.com zhangchenhui@chtwm.com
- * @LastEditTime: 2024-08-28 21:05:31
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2024-09-09 16:37:25
  * @FilePath: /MyLeetCodeStudy/哈撒给/14.手写promise包括resolve-reject.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -43,7 +43,7 @@ class MyPromise {
     reject = (reason) => {
         if (this.status == 'pending') {
             this.status = "rejected"
-            this.value = reason
+            this.reason = reason
 
             this.onRejectedCallBacks.forEach(fn => {
                 fn(reason)
@@ -98,25 +98,25 @@ class MyPromise {
             const values = new Array(promises.length);
             for (let i = 0; i < promises.length; i++) {
                 if (!MyPromise.isPromise(promises[i])) {
-                reject(new TypeError("Expected a Promise"));
-                break;
+                    reject(new TypeError("Expected a Promise"));
+                    break;
                 }
 
                 // 处理每个Promise
                 promises[i].then(
-                (value) => {
-                    resolvedCount++;
-                    values[i] = value;
+                    (value) => {
+                        resolvedCount++;
+                        values[i] = value;
 
-                    // 当所有Promise都成功时，resolve结果数组
-                    if (resolvedCount === promises.length) {
-                    resolve(values);
+                        // 当所有Promise都成功时，resolve结果数组
+                        if (resolvedCount === promises.length) {
+                            resolve(values);
+                        }
+                    },
+                    (reason) => {
+                        // 只要有一个Promise失败，就reject整个Promise.all的结果
+                        reject(reason);
                     }
-                },
-                (reason) => {
-                    // 只要有一个Promise失败，就reject整个Promise.all的结果
-                    reject(reason);
-                }
                 );
             }
         });
