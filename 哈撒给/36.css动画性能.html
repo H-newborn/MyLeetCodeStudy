@@ -1,0 +1,62 @@
+<!--
+ * @Author: This is CodeMan
+-->
+<!--
+ * @Author: This is CodeMan
+-->
+<!-- /*
+ * @Author: This is CodeMan
+ */ -->
+<!-- // css动画如何开启硬件加速？请用原生代码实现一个圆形DIV从左到右移动50px的动画 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            /* position: relative; */
+            height: 100px;
+            width: 100px;
+            background: #000;
+            /* animation: demo 3s timing-function delay iteration-count direction fill-mode; */
+            animation: demo 3s linear 2s 4 alternate;
+        }
+    
+        @keyframes demo {
+            0% {
+                transform: translate(0, 0);
+            }
+            50% {
+                transform: translate(100px, 0);
+            }
+    
+            100% {
+                transform: translate(100px, 100px);
+            }
+        }
+    </style>
+    
+</head>
+<body>
+    <div></div>
+    <ul class="ulname"></ul>
+    <ul id="app"></ul>
+    <script defer>
+        const ulEle = document.querySelector('.ulname')
+        const ulEle2 = document.querySelector('#app')
+        console.log(ulEle, ulEle2)
+        for (let i = 0; i < 3; i++) {
+            const ele = document.createElement('li')
+            ele.addEventListener('click', () => {
+                alert(i)
+            })
+            ele.innerHTML = i
+            ulEle.insertAdjacentElement('afterBegin', ele.cloneNode(true))
+            ulEle2.insertAdjacentElement('afterBegin', ele)
+        }
+    </script>
+</body>
+</html>
+

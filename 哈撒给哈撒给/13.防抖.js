@@ -1,13 +1,17 @@
 /*
  * @Author: This is CodeMan
  */
+/*
+ * @Author: This is CodeMan
+ */
 function debounce(fn, wait) {
     let timer = null
-    return function (...args) {
+    return function () {
         if (timer) {
             timer = null
         }
-        let _this = this
+        const  _this = this
+        const args = [...arguments]
         timer = setTimeout(() => {
             fn.call(_this, ...args)
         }, wait)

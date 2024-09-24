@@ -7,3 +7,8 @@
 //     if (domainList.indexOf(host)>=0) {
 //         res.setHeader('access-control-allow-origin',host)
 //     }
+
+const domainList = ['a.com', 'b.com']
+if (domainList.indexOf(host) > 0) {
+    res.setHeader('access-control-allow-origin', host)
+}

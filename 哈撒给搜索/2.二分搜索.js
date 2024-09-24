@@ -1,13 +1,13 @@
 /*
  * @Author: zhangchenhui@chtwm.com zhangchenhui@chtwm.com
  * @Date: 2024-06-05 21:10:05
- * @LastEditors: zhangchenhui@chtwm.com zhangchenhui@chtwm.com
- * @LastEditTime: 2024-08-02 10:21:11
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2024-09-22 22:39:43
  * @FilePath: /MyLeetCodeStudy/哈撒给搜索/2.二分搜索.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 // 二分搜索是有序数组 的一种 搜索方法
-Array.prototype.binarySearch = (item) => {
+Array.prototype.binarySearch = function(item) {
     let low = 0
     console.log(this, 'this')
     let high = this.length - 1
