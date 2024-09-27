@@ -1,3 +1,6 @@
+/*
+ * @Author: This is CodeMan
+ */
 var WordDictionary = function () {
   this.root = new Map();
   this.tag = Symbol("isEnd");
@@ -13,15 +16,23 @@ WordDictionary.prototype.addWord = function (word) {
 }
 
 WordDictionary.prototype.search = function (word, pointer = this.root, i = 0) {
-  if (pointer === undefined) return false
-  for (; i < word.length; i++) {
-    if (word[i] === '.') {
-      for (const [key, node] of pointer.entries()) {
-        if (key === this.tag) continue
-        if(this.search(word,node,i+1)) return true
+  const dfs = (node, index) => {
+    if (word.length === index) {
+      return node.isEnd
+    }
+    let ch = word[index]
+    if (ch !== '.') {
+      const child = node.children[ch.charCodeAt(0) - 'a'.charCodeAt(0)]
+      if (child && dfs(index + 1, child)) {
+        return true
       }
-      return false
+    } else {
+      for (const child of node.children) {
+        if (child && dfs(index + 1, child)) {
+          return true
+        }
+      }
     }
   }
-  return !!pointer.get(this.tag)
+  dfs(0, this.trieNodeRoot)
 }

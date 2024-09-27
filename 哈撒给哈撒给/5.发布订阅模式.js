@@ -4,6 +4,9 @@
 /*
  * @Author: This is CodeMan
  */
+/*
+ * @Author: This is CodeMan
+ */
 // const emitEvent = new EmitterEvent()
 // const fn1 = () => { console.log('woshidom1') }
 // const fn2 = () => { console.log('woshidom2') }
@@ -18,30 +21,44 @@
 // emitEvent.off('e1', fn1)
 // emitEvent.emit('e1')
 
+/*
+ * @Author: This is CodeMan
+ */
 class eventEmitEvent {
     constructor() {
-        this.event = {}
+        // 事件中心
+        this.events = {}
     }
+    // 注册事件
     on(eventName, fn) {
-        if (!this.event[eventName]) {
-            this.event[eventName] = []
+        // 事件不存在，初始化事件
+        if (!this.events[eventName]) {
+            this.events[eventName] = []
         }
-        this.event[eventName].push(fn)
+        // 推入事件
+        this.events[eventName].push(fn)
     }
+    // 注销事件
     off(eventName, fn) {
-        if (!this.event[eventName]) {
-            console.error('bucunzai')
+        if (!this.events[eventName]) {
+            console.error('当前事件不存在')
             return
         }
-        if (this.event[eventName].indexOf(fn) === -1) {
-            console.error('bucunzai')
+        const index = this.events[eventName].indexOf(fn)
+        console.log(index)
+        if (index >= 0) {
+            this.events[eventName].splice(index, 1)
+        } else {
+            console.error('当前事件不存在')
             return
         }
-        const index = this.event[eventName].indexOf(fn) 
-        this.event[eventName].splice(index, 1)
     }
+    // 通知执行
     notify(eventName) {
-        this.event[eventName].forEach(callback => {
+        if (!this.events[eventName]) {
+            console.error('当前事件不存在')
+        }
+        this.events[eventName].forEach(callback => {
             callback()
         })
     }

@@ -1,8 +1,8 @@
 /*
  * @Author: zhangchenhui@chtwm.com zhangchenhui@chtwm.com
  * @Date: 2024-07-26 10:23:49
- * @LastEditors: zhangchenhui@chtwm.com zhangchenhui@chtwm.com
- * @LastEditTime: 2024-07-27 10:48:11
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2024-09-27 10:38:20
  * @FilePath: /MyLeetCodeStudy/linkList/114.flatten.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -51,5 +51,22 @@ var flatten1 = function(root) {
             root.left = null
             root = root.right
         }
+    }
+};
+
+// 二叉树转换为链表
+var flatten = function(root) {
+    if(!root) { return root }
+    while(root) {
+        if(root.left) {
+            let tempLeft = root.left
+            while(tempLeft.right) {
+                tempLeft = tempLeft.right
+            }
+            tempLeft.right = root.right
+            root.right = root.left
+            root.left = null
+        }
+        root = root.right
     }
 };
