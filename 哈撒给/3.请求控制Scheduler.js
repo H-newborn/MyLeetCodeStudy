@@ -1,115 +1,38 @@
 /*
- * @Author: zhangchenhui@chtwm.com zhangchenhui@chtwm.com
- * @Date: 2024-06-05 20:29:33
- * @LastEditors: zhangchenhui@chtwm.com zhangchenhui@chtwm.com
- * @LastEditTime: 2024-07-04 19:21:50
- * @FilePath: /MyLeetCodeStudy/哈撒给/3.请求控制Scheduler.js
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @Author: This is CodeMan
+// ### 题目：实现一个带并发限制的Promise调度器
+// #### 要求：
+// 请实现一个带并发限制的Promise调度器Scheduler，保证同时最多运行的Promise数量不超过限制。调度器需要提供两个主要方法：
+// 1. `add(promiseCreator)`：添加一个返回Promise的函数到调度器。
+// 2. `start()`：开始执行所有已添加的Promise函数。
+// #### 示例：
+// ```javascript
  */
-// interface workType {
-//     count: 100,
-//     priority: Number
-// }
-
-let taskQueue = []
-// 上一次执行perform对应的优先级
-let prevPriority = IdlePriorty
-// 当前调度的curCallback
-let curCallback
-
-// let isBatchingUpdates = false
-
-function cancelCallback(task) {
-    task.callback = null
-}
-
-// 调度
-function schedule() {
-    // 尝试获取当前正在调度的callback
-    const cbNode = getFirstCallbackNode()
-
-    // 取出优先级最高的work
-    const curWork = taskQueue.sort((w1, w2) => {
-        return w1.priority - w2.priority
-    })[0]
-    
-    if (!curWork) {
-        // 没有work需要调度
-        curCallback = null
-        cbNode && cancelCallback(cbNode)
-        // perform(curWork)
-        return
+class Scheduler {
+    constructor(limit) {
+        this.limit = limit
+        this.queues = []
+        this.resCount = 0
     }
-
-    // 获取当前最高优先级work的优先级
-    const { priority: curPriority } = curWork
-    if (curPriority == prevPriority) {
-        // 如果优先级相同，则不需要重新调度，退出调度
-        return
+    add(queueCreator) {
+        this.queues.push(queueCreator)
     }
-
-    // 准备调度当前最高优先级的work
-    // 调度之前，如果有工作正在进行，中断
-    cbNode && cancelCallback(cbNode)
-
-    curCallback = scheduleCallback(curPriority, perform.bind(null, curWork))
-}
-
-// 执行
-function perform(work) {
-    // 是否需要同步执行
-    const needSync = work.priority === 'ImmediatePriority' || didTimeOut
-    while ((needSync || !shouldYield()) && work.count) {
-        work.count--
-        insertItem()
-    }
-    
-    // 跳出循环，prevPriority代表上一次执行的优先级
-    prevPriority = work.priority
-    if (!work.count) {
-        // 删除已完成的work
-        const workIndex = workList.indexOf(work)
-        workList.splice(workIndex, 1)
-        // 重置优先级
-        prevPriority = IdlePriorty
-    }
-
-    const prevCallback = curCallback
-    // 开始调度，调度完后，如果callback发生变化，说明这是新的work
-    schedule()
-    const newCallback = curCallback
-
-    if (newCallback && prevCallback === newCallback) {
-        // 同一个work，timeSlice时间用尽
-        return perform.bind(null, work)
+    start() {
+        if (this.queues.length === 0) {
+            
+        }
     }
 }
 
-button.onclick = () => {
-    workList.unshift({
-        count: 100
-    })
-    schedule()
+const timeout = (time) => new Promise(resolve => setTimeout(resolve, time))
+
+const sheduler = new Scheduler(2)
+
+const addTask = (time, order) => {
+    sheduler.add(() => timeout(time).then(() => console.log(order)))
 }
-
-
-// function scheduleUpdateOnFiber(fiber) {
-//     taskQueue.push(fiber)
-// }
-
-// function batchedUpdates(fn) {
-//     isBatchingUpdates = true
-//     fn()
-//     isBatchingUpdates = false
-    
-//     if (taskQueue.length > 0) {
-//         performWork()
-//     }
-// }
-
-// function performWork() {
-//     while (taskQueue.length > 0) {
-//         let fiber = taskQueue.shift()
-//         updateFiber(fiber)
-//     }
-// }
+addTask(1000, '1')
+addTask(500, '2')
+addTask(300, '3')
+addTask(400, '4')
+scheduler.start()

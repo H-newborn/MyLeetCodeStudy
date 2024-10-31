@@ -1,9 +1,12 @@
 /*
  * @Author: This is CodeMan
  */
+/*
+ * @Author: This is CodeMan
+ */
 let _observer_id = 0
 let _observed_id = 0
-// 观察者
+// 观察者 类似vue中的dep
 class Observer {
     constructor() {
         this.id = _observer_id++
@@ -13,7 +16,7 @@ class Observer {
     }
 }
 
-// 被观察者
+// 被观察者 类似vue中的data
 class Observed {
     constructor() {
         _observed_id++

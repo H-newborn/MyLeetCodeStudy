@@ -13,7 +13,7 @@ class MyPromise {
                 this.status = 'fulfilled'
                 this.value = val
                 this.onFulfilledCallbacks.forEach(callback => {
-                    callback(this.value)
+                    callback()
                 }) 
             }
         }
@@ -22,7 +22,7 @@ class MyPromise {
                 this.status = 'rejected'
                 this.reason = reason
                 this.onRejectedCallbacks.forEach(callback => {
-                    callback(this.reason)
+                    callback()
                 })
             }
         }
@@ -35,7 +35,7 @@ class MyPromise {
     }
     then(onSuccess, onReject) {
         console.log(this.status, 'status')
-        return new Promise((resolve, reject) => {
+        return new MyPromise((resolve, reject) => {
             if (this.status === 'pending') {
                 try {
                     this.onFulfilledCallbacks.push(() => {
@@ -51,9 +51,14 @@ class MyPromise {
                 }
             }
             if (this.status === 'fulfilled') {
+                
                 try {
-                    const res = onSuccess(this.value)
-                    resolve(res)
+                    if (onSuccess) {
+                        const res = onSuccess(this.value)
+                        resolve(res)
+                    } else {
+                        resolve(this.value)
+                    }
                 } catch (err) {
                     reject(err)
                 }
@@ -100,11 +105,37 @@ class MyPromise {
     }
 }
 
-const a = new MyPromise((resolve, reject) => {
-    console.log(1111)
-    resolve(222)
-}).then(() => {
-    console.log(2222)
-}).then(() => {
-    console.log(888)
+// const a = new MyPromise((resolve, reject) => {
+//     console.log(1111)
+//     setTimeout(() => {
+//         resolve(222)
+//     }, 300)
+// }).then((res) => {
+//     console.log(res, 888)
+// })
+
+const p1 = new MyPromise((resolve, reject) => {
+    setTimeout(() => {
+        console.log(1000)
+        resolve(1000)
+    }, 1000)
+})
+
+const p2 = new MyPromise((resolve, reject) => {
+    setTimeout(() => {
+        console.log(444)
+        resolve(444)
+    }, 3000)
+})
+
+const p3 = new MyPromise((resolve, reject) => {
+    setTimeout(() => {
+        console.log(555)
+        resolve(555)
+    }, 2000)
+})
+
+console.log(new MyPromise().all, 'MyPromise')
+new MyPromise().all([p1, p2, p3]).then(res => {
+    console.log(8888)
 })

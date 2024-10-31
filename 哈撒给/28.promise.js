@@ -104,6 +104,28 @@ class myPromise {
             }
         })
     }
+    allSettled(promises) {
+        return new MyPromise((resolve, reject) => {
+            let count = promises.length
+            let results = new Array(count).fill(0)
+            if (count === 0) { return resolve(results) }
+            
+            for (let i = 0; i < promises.length; i++) {
+                Promise.resolve(promises[i]).then((value) => {
+                    results[index] = {status: 'fulfilled', value}
+                }, () => {
+                    results[index] = {status: 'rejected', value}
+                }).then(() => {
+                    count--
+                    if (count === 0) {
+                        resolve(resolve)
+                    }
+                }, err => {
+                    reject(err)
+                })
+            }
+        })
+    }
 }
 
 const a = new MyPromise((resolve, reject) => {
